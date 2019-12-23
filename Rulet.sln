@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rulet", "Rulet\Rulet.csproj", "{0BED9751-A498-441C-9BF1-A78F7E919FAB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0BED9751-A498-441C-9BF1-A78F7E919FAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BED9751-A498-441C-9BF1-A78F7E919FAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BED9751-A498-441C-9BF1-A78F7E919FAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BED9751-A498-441C-9BF1-A78F7E919FAB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7CA5A0F4-D27C-4024-AD4D-41D3B3C080B7}
+	EndGlobalSection
+EndGlobal
