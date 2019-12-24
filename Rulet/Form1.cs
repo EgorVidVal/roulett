@@ -10,6 +10,7 @@ using System.Windows.Forms;
 
 namespace Rulet
 {
+    
     public partial class Form1 : Form
     {
         public Form1()
@@ -17,60 +18,35 @@ namespace Rulet
             InitializeComponent();
         }
 
-        public object[] instructions = new object[20];
+        //изменение банка в ходе игры
+        List<int> bank_value = new List<int>() { };
+        //Хранение информации о ставке
+        //public object[] instructions = new object[20];
+        //н
         public int counter = 0;
+        List<object> instructions = new List<object>() { };
+
+
         private void Test_Click(object sender, EventArgs e)
         {
            Table tab = new Table();
            tab.Rand();
-           string roulett = Convert.ToString(tab.Roulett);
+           int roulett = tab.Roulett;
            string color_numb = Convert.ToString(tab.Color_numb);
+           richTextBox2.Text += "\n" + "Число:" + roulett + " цвет: " + color_numb + "\n";
 
-            richTextBox2.Text += "\n" + "Число:" + roulett + " цвет: " + color_numb + "\n";
-           for (int i = 0;i<10;i++)
-           {
-               if(instructions[i] == "Rate")
-                {
-                    if(Convert.ToInt32(instructions[i + 1]) == tab.Roulett)
-                    {
-                        richTextBox7.Text = Convert.ToString(Convert.ToInt32(richTextBox7.Text) + (Convert.ToInt32(instructions[i + 2]) * 36));
-                        richTextBox2.Text = "Победа на число";
-                    }
-                }
-                if(instructions[i] == "Black")
-                {
-                    if(instructions[i] == tab.Color_numb)
-                    {
-                        richTextBox7.Text = Convert.ToString(Convert.ToInt32(richTextBox7.Text) + (Convert.ToInt32(instructions[i + 1]) * 2));
-                        richTextBox2.Text += "Победа, Черный" + "\n";
-                    }                      
-                    else
-                    {                
-                        richTextBox2.Text += "Поражение" + "\n";
-                    }
-                }
-                if (instructions[i] == "Red")
+           Сonditions con = new Сonditions();
 
-                {
-                    if (instructions[i] == tab.Color_numb)
-                    {
-                        richTextBox7.Text = Convert.ToString(Convert.ToInt32(richTextBox7.Text) + (Convert.ToInt32(instructions[i + 1]) * 2));
-                        richTextBox2.Text = "Победа, Красный" + "\n";
-                    }
-                    else
-                    {
-                        richTextBox2.Text += "Поражение" + "\n";
-                    }
-                        
-                }
-            }
+            
+            con.GameProgress(instructions, roulett, color_numb, richTextBox7, bank_value, richTextBox2);
 
-            Сonditions con = new Сonditions();
+            
             con.Test();
             instructions = new object[20];
             counter = 0;
         }
 
+       
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
