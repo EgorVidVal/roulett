@@ -18,35 +18,73 @@ namespace Rulet
             InitializeComponent();
         }
 
-        //изменение банка в ходе игры
+        //История банка в ходе игры
         List<int> bank_value = new List<int>() { };
-        //Хранение информации о ставке
-        //public object[] instructions = new object[20];
-        //н
-        public int counter = 0;
+               
+        //Хранение информации о ставке       
         List<object> instructions = new List<object>() { };
 
 
+        //Запуск процесса
         private void Test_Click(object sender, EventArgs e)
         {
            Table tab = new Table();
            tab.Rand();
            int roulett = tab.Roulett;
            string color_numb = Convert.ToString(tab.Color_numb);
-           richTextBox2.Text += "\n" + "Число:" + roulett + " цвет: " + color_numb + "\n";
+          
 
-           Сonditions con = new Сonditions();
-
-            
-            con.GameProgress(instructions, roulett, color_numb, richTextBox7, bank_value, richTextBox2);
+           Сonditions con = new Сonditions();           
+           con.GameProgress(instructions ,roulett, color_numb, richTextBox7, bank_value, richTextBox2);
 
             
             con.Test();
-            instructions = new object[20];
-            counter = 0;
+            instructions = new List<object>() { };          
+        }
+        //black, ставка
+        private void Button7_Click(object sender, EventArgs e)
+        {
+            instructions.Add("Black");
+            richTextBox2.Text += "Black" + "\n";
+
+            instructions.Add(numericUpDown1.Value);
+            richTextBox2.Text += numericUpDown1.Value + "\n";
+
+
+            richTextBox7.Text = Convert.ToString(Convert.ToInt32(richTextBox7.Text) - Convert.ToInt32(numericUpDown1.Value));
+        }
+        //red, ставка
+        private void Button6_Click(object sender, EventArgs e)
+        {
+            instructions.Add("Red");
+            richTextBox2.Text += "Red" + "\n";
+
+            instructions.Add(numericUpDown1.Value);
+            richTextBox2.Text += numericUpDown1.Value + "\n";
+
+
+            richTextBox7.Text = Convert.ToString(Convert.ToInt32(richTextBox7.Text) - Convert.ToInt32(numericUpDown1.Value));
+
+
+        }
+        //Делает числовую ставку ( rate, число,ставка)
+        private void Button8_Click(object sender, EventArgs e)
+        {
+            instructions.Add("Rate");
+
+            instructions.Add(Convert.ToInt32(richTextBox8.Text));
+
+            richTextBox2.Text += richTextBox8.Text + "\n";
+
+            instructions.Add(numericUpDown1.Value);
+
+            richTextBox2.Text += numericUpDown1.Value + "\n";
+
+            richTextBox7.Text = Convert.ToString(Convert.ToInt32(richTextBox7.Text) - Convert.ToInt32(numericUpDown1.Value));
         }
 
-       
+
+        #region Куча
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
@@ -61,6 +99,7 @@ namespace Rulet
         {
 
         }
+
         public int quantity_game;
         private void Button5_Click(object sender, EventArgs e)
         {
@@ -124,34 +163,7 @@ namespace Rulet
 
         }
 
-        private void Button7_Click(object sender, EventArgs e)
-        {
-            instructions[counter] = "Black";
-            richTextBox2.Text += instructions[counter] + "\n";
-            counter++;
 
-            instructions[counter] = numericUpDown1.Value;
-            richTextBox2.Text += instructions[counter] + "\n";
-            counter++;
-
-            richTextBox7.Text =Convert.ToString(Convert.ToInt32(richTextBox7.Text) - Convert.ToInt32(numericUpDown1.Value));
-        }
-
-        //red
-        private void Button6_Click(object sender, EventArgs e)
-        {
-            instructions[counter] = "Red";
-            richTextBox2.Text += instructions[counter] + "\n";
-            counter++;
-
-            instructions[counter] = numericUpDown1.Value;
-            richTextBox2.Text += instructions[counter] + "\n";
-            counter++;
-
-            richTextBox7.Text = Convert.ToString(Convert.ToInt32(richTextBox7.Text) - Convert.ToInt32(numericUpDown1.Value));
-
-
-        }
 
         private void RichTextBox8_TextChanged(object sender, EventArgs e)
         {
@@ -173,17 +185,13 @@ namespace Rulet
 
         }
 
-        private void Button8_Click(object sender, EventArgs e)
+        #endregion sd Куча Properties
+
+        private void Button2_Click(object sender, EventArgs e)
         {
-            instructions[counter] = "Rate";
-            counter++;
-            instructions[counter] = Convert.ToInt32(richTextBox8.Text);
-            richTextBox2.Text += instructions[counter] + "\n";
-            counter++;
-            instructions[counter] = numericUpDown1.Value;
-            richTextBox2.Text += instructions[counter] + "\n";
-            counter++;
-            richTextBox7.Text = Convert.ToString(Convert.ToInt32(richTextBox7.Text) - Convert.ToInt32(numericUpDown1.Value));
+            button2.ImageAlign = ContentAlignment.MiddleRight;
+            button2.FlatStyle = FlatStyle.Popup;
+            //docs.microsoft.com/ru-ru/dotnet/api/system.windows.forms.button?view=netcore-3.0
         }
     }
 }

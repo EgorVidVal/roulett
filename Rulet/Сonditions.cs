@@ -24,59 +24,67 @@ namespace Rulet
             }                      
             return x;
         }
-
-        
-        public void GameProgress(object[] instructions, int roulett, string color_numb, System.Windows.Forms.RichTextBox bank,List<int> bank_value, System.Windows.Forms.RichTextBox ounput = null)
+       
+        //Показывает результаты игры (Какие ставки и на что, какое выпало число, какой цвет, сумма банка, список истории банка, окно вывода)
+        public void GameProgress(List<object> instructions, int roulett, string color_numb, System.Windows.Forms.RichTextBox bank,List<int> bank_value, System.Windows.Forms.RichTextBox ounput = null)
         {
-                  
-            for (int i = 0; i < 10; i++)
+            if (ounput != null) ounput.Text = "Число:" + roulett + " цвет: " + color_numb + "\n";
+
+            for (int i = 0; i < instructions.Count; i++)
             {
-                if (instructions[i] == "Rate")
+                //Если есть ключевое слово Rate то есть, ставка на число
+                if (instructions[i] == "Rate") 
                 {
+                    //стравнивает ставку и полученное число в ходе игры
                     if (Convert.ToInt32(instructions[i + 1]) == roulett)
                     {
+                        //В случае совпдаения, увеличивает ставку в 36 раз.
                         int x = Convert.ToInt32(bank.Text) + (Convert.ToInt32(instructions[i + 2]) * 36);
+                        
+                        //если был добавлен необязательный аргумент то выводит в окно.
+                        if(ounput != null) bank.Text = Convert.ToString(x); ounput.Text += "Победа на число";
 
-                        if(ounput != null) bank.Text = Convert.ToString(x); ounput.Text = "Победа на число";
-
-                        bank_value.Add(x);                        
+                                             
                     }
                 }
+                //Если есть ключевое слово Black
                 if (instructions[i] == "Black")
                 {
+                    //Проверяет какой выпал цвет
                     if (instructions[i] == color_numb)
                     {
+                        //если совпадает, то ставка увеличивается на 2 и плюсуется к банку
                         int x = Convert.ToInt32(bank.Text) + (Convert.ToInt32(instructions[i + 1]) * 2);
+                        //если был добавлен необязательный аргумент то выводит в окно.
                         if (ounput != null) bank.Text = Convert.ToString(x); ounput.Text += "Победа, Черный" + "\n";
-
-                        if (ounput != null) bank_value.Add(x);
+                     
                     }
                     else
                     {
-                        ounput.Text = "Победа, Красный" + "\n";ounput.Text += "Поражение" + "\n";
-                        bank_value.Add(Convert.ToInt32(bank.Text));
+                        if (ounput != null) ounput.Text += "Поражение" + "\n";
                     }
                 }
+                //Аналогично
                 if (instructions[i] == "Red")
 
                 {
                     if (instructions[i] == color_numb)
                     {
                         int x = Convert.ToInt32(bank.Text) + (Convert.ToInt32(instructions[i + 1]) * 2);
-                        if (ounput != null) bank.Text = Convert.ToString(x); ounput.Text = "Победа, Красный" + "\n";
-                        bank_value.Add(x);
+                        if (ounput != null) bank.Text = Convert.ToString(x); ounput.Text += "Победа, Красный" + "\n";
                         
                     }
                     else
                     {
-                        bank_value.Add(Convert.ToInt32(bank.Text));
                         if (ounput != null) ounput.Text += "Поражение" + "\n";
                     }
 
-                }
-            }
-
-            Console.WriteLine(bank_value.Count);
+                }                             
+            }         
+            //добавляет настоящее состояние банка в список истории средств.
+            bank_value.Add(Convert.ToInt32(bank.Text));
+           
+            
         }
 
 
