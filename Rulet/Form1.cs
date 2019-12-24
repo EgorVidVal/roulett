@@ -69,7 +69,7 @@ namespace Rulet
             List<string> color = new List<string>() { };
             Table tab = new Table();
             int z = 0;
-            for (int i = 0;i<1000; i++)
+            for (int i = 0;i<10000; i++)
             {
                                 
                 tab.Rand();
@@ -79,7 +79,23 @@ namespace Rulet
                 rull.Add(roulett);
                 color.Add(color_numb);
 
-                
+                if (z == 5)
+                {
+                    List<object> instructionss = new List<object> { "Red", 50 };
+
+                    
+                    Console.WriteLine("******");
+                    Сonditions con = new Сonditions();
+                    con.TestGameProgress(instructionss, roulett, color_numb, Convert.ToInt32(richTextBox7.Text));
+                    richTextBox7.Text = Convert.ToString(Convert.ToInt32(richTextBox7.Text) - 50);
+                    int zxcz = con.rate_bank[3] + con.rate_bank[2] + con.rate_bank[1];
+                    Console.WriteLine(richTextBox7.Text);
+                    string qwerty = Convert.ToString(Convert.ToInt32(richTextBox7.Text) + zxcz);
+                    Console.WriteLine(richTextBox7.Text);
+                    richTextBox2.Text += "Общая сумма выиграша: " + zxcz + " \n";
+                    richTextBox7.Text = qwerty;
+                    z = 0;
+                }
 
                 if (color_numb == "Black")
                 {
@@ -91,20 +107,7 @@ namespace Rulet
                 }
               
               
-                if(z == 5)
-                {
-                    List<object> instructionss =  new List<object>{ "Red",50 };
-                    Console.WriteLine("******");
-                    Сonditions con = new Сonditions();
-                    con.TestGameProgress(instructionss, roulett, color_numb, Convert.ToInt32(richTextBox7.Text));
-
-                    int zxcz = con.rate_bank[3] + con.rate_bank[2] + con.rate_bank[1];
-
-
-                    richTextBox2.Text += "Общая сумма выиграша: " + z + " \n";
-                    richTextBox7.Text = richTextBox7.Text +  Convert.ToString(zxcz);
-                    z = 0;
-                }
+                
 
                 
                 
