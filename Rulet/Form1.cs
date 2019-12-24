@@ -63,6 +63,56 @@ namespace Rulet
             instructions = new List<object>() { };
             
         }
+        public void TestAuto()
+        {
+            List<int> rull = new List<int>() { };
+            List<string> color = new List<string>() { };
+            Table tab = new Table();
+            int z = 0;
+            for (int i = 0;i<1000; i++)
+            {
+                                
+                tab.Rand();
+                int roulett = tab.Roulett;
+                string color_numb = tab.Color_numb;
+                
+                rull.Add(roulett);
+                color.Add(color_numb);
+
+                
+
+                if (color_numb == "Black")
+                {
+                    z++;                   
+                }
+                else
+                {
+                    z = 0;
+                }
+              
+              
+                if(z == 5)
+                {
+                    List<object> instructionss =  new List<object>{ "Red",50 };
+                    Console.WriteLine("******");
+                    Сonditions con = new Сonditions();
+                    con.TestGameProgress(instructionss, roulett, color_numb, Convert.ToInt32(richTextBox7.Text));
+
+                    int zxcz = con.rate_bank[3] + con.rate_bank[2] + con.rate_bank[1];
+
+
+                    richTextBox2.Text += "Общая сумма выиграша: " + z + " \n";
+                    richTextBox7.Text = richTextBox7.Text +  Convert.ToString(zxcz);
+                    z = 0;
+                }
+
+                
+                
+                
+                
+            }
+        }
+            
         //black, ставка
         private void Button7_Click(object sender, EventArgs e)
         {
@@ -214,6 +264,16 @@ namespace Rulet
             button2.ImageAlign = ContentAlignment.MiddleRight;
             button2.FlatStyle = FlatStyle.Popup;
             //docs.microsoft.com/ru-ru/dotnet/api/system.windows.forms.button?view=netcore-3.0
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            TestAuto();
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
