@@ -35,11 +35,33 @@ namespace Rulet
           
 
            Сonditions con = new Сonditions();           
-           con.GameProgress(instructions ,roulett, color_numb, richTextBox7, bank_value, richTextBox2);
+           //con.GameProgress(instructions ,roulett, color_numb, richTextBox7, bank_value, richTextBox2);
 
+
+           con.TestGameProgress(instructions, roulett, color_numb, Convert.ToInt32(richTextBox7.Text));
             
-            con.Test();
-            instructions = new List<object>() { };          
+            richTextBox2.Text += "Число :" + roulett + " цвет: " + color_numb + "\n";
+            
+            if (con.rate_black_red[1] != 37)
+            {
+                richTextBox2.Text += "Выигрыш: " + con.rate_bank[1] + " числа: " + con.rate_black_red[1] + " \n";
+            }
+            
+            if (con.rate_black_red[2] == 1)
+            {
+                richTextBox2.Text += "Победа черный " + con.rate_bank[2] + " \n";
+            }
+            
+            if (con.rate_black_red[3] == 1)
+            {
+                richTextBox2.Text += "Победа красный " + con.rate_bank[3] + " \n";
+            }
+            int z = con.rate_bank[3] + con.rate_bank[2] + con.rate_bank[1];
+
+            richTextBox2.Text += "Общая сумма выиграша: " + z + " \n";
+            richTextBox7.Text = Convert.ToString(con.rate_black_red[0]);
+            instructions = new List<object>() { };
+            
         }
         //black, ставка
         private void Button7_Click(object sender, EventArgs e)
