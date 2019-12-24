@@ -8,20 +8,19 @@ namespace Rulet
 {
     class Table 
     {
+        private Random rnd = new Random();
+        
         public int Roulett { get; set; }
         public string Color_numb { get; set; }
 
         public void Rand()
         {
             //Создание объекта для генерации чисел
-            Random rnd = new Random();
-
-            //Получить случайное число (в диапазоне от 0 до 10)
-            Roulett = rnd.Next(0, 36);
-
+            //Получить случайное число (в диапазоне от 0 до 36)
+            Roulett = rnd.Next(0, 37);           
             Color_numb = Color(Roulett);           
         }
-      
+            
         private string Color(int number_roulette)
         {
             switch (number_roulette)
@@ -50,7 +49,5 @@ namespace Rulet
 
             }
         }
-
-
     }
 }
