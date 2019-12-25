@@ -8,95 +8,17 @@ namespace Rulet
 {
     class Сonditions
     {        
-        public int[] Test()
-        {
-            int[] x = new int[10];
-            string[] y = new string[10];
-           
-            Table tab = new Table();
-           
-            for (int i = 0; i < 10; i++)
-            {
-                tab.Rand();
-                x[i] = tab.Roulett;
-                y[i] = tab.Color_numb;
-                
-            }                      
-            return x;
-        }
-       
+
+        //Какие ставки выигради 1 - какое число выиграло(если было поставлено несколько чисел) 2- выиграл ли черный цвет,3 - красный цвет,4- ставка 2 к 1
+        public int[] rate_black_red = {0,37,0,0,0};
+        //Расположение аналагична картам, чтобы узнать какая тсавка выиграла.
+        public int[] rate_bank = { 0, 0, 0, 0 ,0};
+
+
         //Показывает результаты игры (Какие ставки и на что, какое выпало число, какой цвет, сумма банка, список истории банка, окно вывода)
-        public void GameProgress(List<object> instructions, int roulett, string color_numb, System.Windows.Forms.RichTextBox bank,List<int> bank_value, System.Windows.Forms.RichTextBox ounput = null)
-        {
-            if (ounput != null) ounput.Text = "Число:" + roulett + " цвет: " + color_numb + "\n";
-
-            for (int i = 0; i < instructions.Count; i++)
-            {
-                //Если есть ключевое слово Rate то есть, ставка на число
-                if (instructions[i] == "Rate") 
-                {
-                    //стравнивает ставку и полученное число в ходе игры
-                    if (Convert.ToInt32(instructions[i + 1]) == roulett)
-                    {
-                        //В случае совпдаения, увеличивает ставку в 36 раз.
-                        int x = Convert.ToInt32(bank.Text) + (Convert.ToInt32(instructions[i + 2]) * 36);
-                        
-                        //если был добавлен необязательный аргумент то выводит в окно.
-                        if(ounput != null) bank.Text = Convert.ToString(x); ounput.Text += "Победа на число";
-
-                                             
-                    }
-                }
-                //Если есть ключевое слово Black
-                if (instructions[i] == "Black")
-                {
-                    //Проверяет какой выпал цвет
-                    if (instructions[i] == color_numb)
-                    {
-                        //если совпадает, то ставка увеличивается на 2 и плюсуется к банку
-                        int x = Convert.ToInt32(bank.Text) + (Convert.ToInt32(instructions[i + 1]) * 2);
-                        //если был добавлен необязательный аргумент то выводит в окно.
-                        if (ounput != null) bank.Text = Convert.ToString(x); ounput.Text += "Победа, Черный" + "\n";
-                     
-                    }
-                    else
-                    {
-                        if (ounput != null) ounput.Text += "Поражение" + "\n";
-                    }
-                }
-                //Аналогично
-                if (instructions[i] == "Red")
-
-                {
-                    if (instructions[i] == color_numb)
-                    {
-                        int x = Convert.ToInt32(bank.Text) + (Convert.ToInt32(instructions[i + 1]) * 2);
-                        if (ounput != null) bank.Text = Convert.ToString(x); ounput.Text += "Победа, Красный" + "\n";
-                        
-                    }
-                    else
-                    {
-                        if (ounput != null) ounput.Text += "Поражение" + "\n";
-                    }
-
-                }                             
-            }         
-            //добавляет настоящее состояние банка в список истории средств.
-            bank_value.Add(Convert.ToInt32(bank.Text));
-           
-            
-        }
-
-        
-        public int[] rate_black_red = {0,37,0,0};
-        public int[] rate_bank = { 0, 0, 0, 0 };
-
-
-
         public void TestGameProgress(List<object> instructions, int roulett, string color_numb,int bank)
         {
             
-
             for (int i = 0; i < instructions.Count; i++)
             {
                 //Если есть ключевое слово Rate то есть, ставка на число
@@ -123,8 +45,7 @@ namespace Rulet
                         rate_bank[2] = (Convert.ToInt32(instructions[i + 1]) * 2);
                         //если был добавлен необязательный аргумент то выводит в окно. 
 
-                    }
-                   
+                    }                   
                 }
                 //Аналогично
                 if (instructions[i] == "Red")
@@ -137,6 +58,20 @@ namespace Rulet
                         bank += (Convert.ToInt32(instructions[i + 1]) * 2);                        
 
                     }
+                }
+
+                if (instructions[i] == "2k1")
+                {
+                    for(int x = 0;x <= 36; x +=3)
+                    {
+                        if ((Convert.ToInt32(instructions[i + 1]) + x) == roulett)
+                        {
+                            rate_black_red[4] = 1;
+                            rate_bank[4] += (Convert.ToInt32(instructions[i + 2]) * 3);
+                            bank += (Convert.ToInt32(instructions[i + 2]) * 3);
+                           
+                        }
+                    }                    
                 }
             }
             rate_black_red[0] = bank;

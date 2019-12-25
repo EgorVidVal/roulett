@@ -56,20 +56,24 @@ namespace Rulet
             {
                 richTextBox2.Text += "Победа красный " + con.rate_bank[3] + " \n";
             }
-            int z = con.rate_bank[3] + con.rate_bank[2] + con.rate_bank[1];
+            if (con.rate_black_red[4] == 1)
+            {
+                richTextBox2.Text += "Победа линии " + con.rate_bank[4] + " \n";
+            }
+            int z = con.rate_bank[3] + con.rate_bank[2] + con.rate_bank[1] + con.rate_bank[4];
 
             richTextBox2.Text += "Общая сумма выиграша: " + z + " \n";
             richTextBox7.Text = Convert.ToString(con.rate_black_red[0]);
             instructions = new List<object>() { };
             
         }
-        public void TestAuto()
+        public void TestAuto() 
         {
             List<int> rull = new List<int>() { };
             List<string> color = new List<string>() { };
             Table tab = new Table();
             int z = 0;
-            for (int i = 0;i<10000; i++)
+            for (int i = 0;i<1000; i++)
             {
                                 
                 tab.Rand();
@@ -86,7 +90,7 @@ namespace Rulet
                     
                     Console.WriteLine("******");
                     Сonditions con = new Сonditions();
-                    con.TestGameProgress(instructionss, roulett, color_numb, Convert.ToInt32(richTextBox7.Text));
+                    con.TestGameProgress(instructions, roulett, color_numb, Convert.ToInt32(richTextBox7.Text));
                     richTextBox7.Text = Convert.ToString(Convert.ToInt32(richTextBox7.Text) - 50);
                     int zxcz = con.rate_bank[3] + con.rate_bank[2] + con.rate_bank[1];
                     Console.WriteLine(richTextBox7.Text);
@@ -105,17 +109,112 @@ namespace Rulet
                 {
                     z = 0;
                 }
-              
-              
-                
-
-                
-                
-                
-                
+                     
             }
         }
+
+
+        List<object> AutoGame = new List<object>() { };
+        int counterColor = 0;
+        public void TestTest()
+        {
             
+            List<int> game_numbers = new List<int>() { };
+
+            List<string> game_color = new List<string>() { };
+
+            Table tab = new Table();
+
+            
+            int startColor = 0;
+
+            int counteInterval = Convert.ToInt32(richTextBox5.Text); 
+
+            int interval;
+            List<string> color = new List<string>() { };
+            List<int> numbers = new List<int>() { };
+
+            for (int i = 0; i < AutoGame.Count;i++)
+            {
+                if(AutoGame[i] == "color")
+                {
+                    Console.WriteLine(AutoGame[i +1]);
+                    startColor = 1;
+                    color.Add(Convert.ToString(AutoGame[i + 1]));
+                }
+                if(AutoGame[i] == "numberofgames")
+                {
+                    numbers.Add(Convert.ToInt32(AutoGame[i + 1]));
+                }
+
+            }
+            
+            for (int i = 0;i < GameNumber_of_Games();i++)
+            {
+                tab.Rand();
+                int roulett = tab.Roulett;
+                string color_numb = tab.Color_numb;
+
+                
+
+                if (startColor > 0)
+                {
+                    Console.WriteLine(counterColor);
+                   
+                  
+
+                    // WMS_EEX
+                    if (counterColor >= 5)
+                    {
+                        Console.WriteLine("******");
+                        Сonditions con = new Сonditions();
+                        con.TestGameProgress(instructions, roulett, color_numb, Convert.ToInt32(richTextBox7.Text));
+                        richTextBox7.Text = Convert.ToString(Convert.ToInt32(richTextBox7.Text) - 50);
+                        int zxcz = con.rate_bank[3] + con.rate_bank[2] + con.rate_bank[1];
+                        Console.WriteLine(richTextBox7.Text);
+                        string qwerty = Convert.ToString(Convert.ToInt32(richTextBox7.Text) + zxcz);
+                        Console.WriteLine(richTextBox7.Text);
+                        richTextBox2.Text += "Общая сумма выиграша: " + zxcz + " \n";
+                        richTextBox7.Text = qwerty;
+                    }
+
+                   
+                    if (color_numb == color[0])
+                    {
+                        counterColor++;
+                    }
+                    else
+                    {
+                        counterColor = 0;
+                    }
+                }
+
+            }
+            
+        }
+        public int Game_Instructions(string color_numb,string color,int interval)
+        {
+            if (counterColor == interval)
+            {
+                return 1;
+            }
+
+            if (color_numb == color)
+            {
+                counterColor++;
+            }
+            else
+            {
+                counterColor = 0;
+            }
+           
+            return 0;
+        }
+        public int GameNumber_of_Games()
+        {
+            return Convert.ToInt32(richTextBox6.Text);
+        }
+
         //black, ставка
         private void Button7_Click(object sender, EventArgs e)
         {
@@ -158,6 +257,20 @@ namespace Rulet
             richTextBox7.Text = Convert.ToString(Convert.ToInt32(richTextBox7.Text) - Convert.ToInt32(numericUpDown1.Value));
         }
 
+        private void rate_number(int rate)
+        {
+            instructions.Add("Rate");
+
+            instructions.Add(rate);
+
+            richTextBox2.Text += instructions[instructions.Count - 1] + "\n";
+
+            instructions.Add(numericUpDown1.Value);
+
+            richTextBox2.Text += numericUpDown1.Value + "\n";
+
+            richTextBox7.Text = Convert.ToString(Convert.ToInt32(richTextBox7.Text) - Convert.ToInt32(numericUpDown1.Value));
+        }
 
         #region Куча
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -180,24 +293,30 @@ namespace Rulet
         {
             try
             {
-                quantity_game = Convert.ToInt32(richTextBox6.Text);
+                GameNumber_of_Games();
+                AutoGame.Add("numberofgames");
+                AutoGame.Add(GameNumber_of_Games());
             }
             catch
             {
                 MessageBox.Show("Введите корректные данные");
             }
             
+
+
         }
 
         private void Button4_Click(object sender, EventArgs e)
         {
             if(checkBox1.Checked == true && checkBox2.Checked == false)
             {
-
+                AutoGame.Add("color");
+                AutoGame.Add("Black");
             }
             if (checkBox2.Checked == true && checkBox1.Checked == false)
             {
-
+                AutoGame.Add("color");
+                AutoGame.Add("Red");
             }
             if (checkBox1.Checked == true && checkBox2.Checked == true)
             {
@@ -220,12 +339,12 @@ namespace Rulet
         {
 
         }
-        int repetitions_values;
         private void Button1_Click(object sender, EventArgs e)
         {
             try
-            {
-                repetitions_values = Convert.ToInt32(richTextBox6.Text);
+            {               
+                AutoGame.Add("same");
+                AutoGame.Add(Convert.ToInt32(richTextBox6.Text));
             }
             catch
             {
@@ -276,6 +395,248 @@ namespace Rulet
 
         private void label3_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void RichTextBox6_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Button10_Click(object sender, EventArgs e)
+        {
+            AutoGame.Add("if");
+        }
+
+        private void Button11_Click(object sender, EventArgs e)
+        {
+            TestTest();
+        }
+
+        
+        private void Button3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void RichTextBox5_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+        #region number
+        private void Button01_Click(object sender, EventArgs e)
+        {
+            rate_number(1);
+        }
+
+        private void Button02_Click(object sender, EventArgs e)
+        {
+            rate_number(2);
+        }
+
+        private void Button03_Click(object sender, EventArgs e)
+        {
+            rate_number(3);
+        }
+
+        private void Button04_Click(object sender, EventArgs e)
+        {
+            rate_number(4);
+        }
+
+        private void Button05_Click(object sender, EventArgs e)
+        {
+            rate_number(5);
+        }
+
+        private void Button06_Click(object sender, EventArgs e)
+        {
+            rate_number(6);
+        }
+
+        private void Button07_Click(object sender, EventArgs e)
+        {
+            rate_number(7);
+        }
+
+        private void Button08_Click(object sender, EventArgs e)
+        {
+            rate_number(8);
+        }
+
+        private void Button09_Click(object sender, EventArgs e)
+        {
+            rate_number(9);
+        }
+
+        private void Butto10_Click(object sender, EventArgs e)
+        {
+            rate_number(10);
+        }
+
+        private void Butto11_Click(object sender, EventArgs e)
+        {
+            rate_number(11);
+        }
+
+        private void Butt12_Click(object sender, EventArgs e)
+        {
+            rate_number(12);
+        }
+
+        private void Butt13_Click(object sender, EventArgs e)
+        {
+            rate_number(13);
+        }
+
+        private void Butt14_Click(object sender, EventArgs e)
+        {
+            rate_number(14);
+        }
+
+        private void Butt15_Click(object sender, EventArgs e)
+        {
+            rate_number(15);
+        }
+
+        private void Butt16_Click(object sender, EventArgs e)
+        {
+            rate_number(16);
+        }
+
+        private void Butt17_Click(object sender, EventArgs e)
+        {
+            rate_number(17);
+        }
+
+        private void Butt18_Click(object sender, EventArgs e)
+        {
+            rate_number(18);
+        }
+
+        private void Butt19_Click(object sender, EventArgs e)
+        {
+            rate_number(19);
+        }
+
+        private void Butt20_Click(object sender, EventArgs e)
+        {
+            rate_number(20);
+        }
+
+        private void Butt21_Click(object sender, EventArgs e)
+        {
+            rate_number(21);
+        }
+
+        private void Butt22_Click(object sender, EventArgs e)
+        {
+            rate_number(22);
+        }
+
+        private void Butt23_Click(object sender, EventArgs e)
+        {
+            rate_number(23);
+        }
+
+        private void Butt24_Click(object sender, EventArgs e)
+        {
+            rate_number(24);
+        }
+
+        private void Butt25_Click(object sender, EventArgs e)
+        {
+            rate_number(25);
+        }
+
+        private void Butt26_Click(object sender, EventArgs e)
+        {
+            rate_number(26);
+        }
+
+        private void Butt27_Click(object sender, EventArgs e)
+        {
+            rate_number(27);
+        }
+
+        private void Butt28_Click(object sender, EventArgs e)
+        {
+            rate_number(28);
+        }
+
+        private void Butt29_Click(object sender, EventArgs e)
+        {
+            rate_number(29);
+        }
+
+        private void Butt30_Click(object sender, EventArgs e)
+        {
+            rate_number(30);
+        }
+
+        private void Butt31_Click(object sender, EventArgs e)
+        {
+            rate_number(31);
+        }
+
+        private void Butt32_Click(object sender, EventArgs e)
+        {
+            rate_number(32);
+        }
+
+        private void Butt33_Click(object sender, EventArgs e)
+        {
+            rate_number(33);
+        }
+
+        private void Butt34_Click(object sender, EventArgs e)
+        {
+            rate_number(34);
+        }
+
+        private void Butt35_Click(object sender, EventArgs e)
+        {
+            rate_number(35);
+        }
+
+        private void Butt36_Click(object sender, EventArgs e)
+        {
+            rate_number(36);
+        }
+        private void Zerro_Click(object sender, EventArgs e)
+        {
+            rate_number(0);
+        }
+
+        #endregion
+
+        public void Buttom2_1(int numb)
+        {
+            instructions.Add("2k1");
+
+            instructions.Add(numb);
+
+            richTextBox2.Text += instructions[instructions.Count - 1] + "\n";
+
+            instructions.Add(numericUpDown1.Value);
+
+            richTextBox2.Text += numericUpDown1.Value + "\n";
+
+            richTextBox7.Text = Convert.ToString(Convert.ToInt32(richTextBox7.Text) - Convert.ToInt32(numericUpDown1.Value));
+        }
+        private void But2k1_3_Click(object sender, EventArgs e)
+        {
+            Buttom2_1(3);
+        }
+
+        private void But2k1_2_Click(object sender, EventArgs e)
+        {
+            Buttom2_1(2);
+        }
+
+        private void But2k1_1_Click(object sender, EventArgs e)
+        {
+            Buttom2_1(1);
 
         }
     }
