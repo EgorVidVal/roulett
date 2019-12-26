@@ -875,6 +875,7 @@
             this.one12.TabIndex = 67;
             this.one12.Text = "Первая 12";
             this.one12.UseVisualStyleBackColor = false;
+            this.one12.Click += new System.EventHandler(this.One12_Click);
             // 
             // two12
             // 
@@ -886,6 +887,7 @@
             this.two12.TabIndex = 68;
             this.two12.Text = "Вторая 12";
             this.two12.UseVisualStyleBackColor = false;
+            this.two12.Click += new System.EventHandler(this.Two12_Click);
             // 
             // three12
             // 
@@ -897,6 +899,7 @@
             this.three12.TabIndex = 69;
             this.three12.Text = "Третья 12";
             this.three12.UseVisualStyleBackColor = false;
+            this.three12.Click += new System.EventHandler(this.Three12_Click);
             // 
             // but2k1_1
             // 
@@ -944,6 +947,7 @@
             this.nech.TabIndex = 73;
             this.nech.Text = "Нечет";
             this.nech.UseVisualStyleBackColor = false;
+            this.nech.Click += new System.EventHandler(this.Nech_Click);
             // 
             // but19v36
             // 
@@ -955,6 +959,7 @@
             this.but19v36.TabIndex = 74;
             this.but19v36.Text = "19 до 36";
             this.but19v36.UseVisualStyleBackColor = false;
+            this.but19v36.Click += new System.EventHandler(this.But19v36_Click);
             // 
             // chet
             // 
@@ -966,6 +971,7 @@
             this.chet.TabIndex = 76;
             this.chet.Text = "Чет";
             this.chet.UseVisualStyleBackColor = false;
+            this.chet.Click += new System.EventHandler(this.Chet_Click);
             // 
             // but1v18
             // 
@@ -977,6 +983,7 @@
             this.but1v18.TabIndex = 75;
             this.but1v18.Text = "1 до 18";
             this.but1v18.UseVisualStyleBackColor = false;
+            this.but1v18.Click += new System.EventHandler(this.But1v18_Click);
             // 
             // Form1
             // 

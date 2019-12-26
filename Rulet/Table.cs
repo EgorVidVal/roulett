@@ -13,6 +13,7 @@ namespace Rulet
         public int Roulett { get; set; }
         public string Color_numb { get; set; }
 
+        //Рандом
         public void Rand()
         {
             //Создание объекта для генерации чисел
@@ -21,6 +22,7 @@ namespace Rulet
             Color_numb = Color(Roulett);           
         }
             
+        //Определяет цвет цифры
         private string Color(int number_roulette)
         {
             switch (number_roulette)
