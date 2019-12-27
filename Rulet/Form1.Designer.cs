@@ -126,9 +126,9 @@
             // 
             // richTextBox2
             // 
-            this.richTextBox2.Location = new System.Drawing.Point(636, 232);
+            this.richTextBox2.Location = new System.Drawing.Point(614, 239);
             this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.Size = new System.Drawing.Size(236, 300);
+            this.richTextBox2.Size = new System.Drawing.Size(169, 300);
             this.richTextBox2.TabIndex = 3;
             this.richTextBox2.Text = "";
             this.richTextBox2.TextChanged += new System.EventHandler(this.RichTextBox2_TextChanged);
@@ -301,7 +301,7 @@
             this.button7.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.button7.Location = new System.Drawing.Point(307, 396);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(72, 26);
+            this.button7.Size = new System.Drawing.Size(72, 29);
             this.button7.TabIndex = 20;
             this.button7.UseVisualStyleBackColor = false;
             this.button7.Click += new System.EventHandler(this.Button7_Click);
@@ -311,14 +311,14 @@
             this.button6.BackColor = System.Drawing.Color.Maroon;
             this.button6.Location = new System.Drawing.Point(230, 396);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 26);
+            this.button6.Size = new System.Drawing.Size(75, 29);
             this.button6.TabIndex = 21;
             this.button6.UseVisualStyleBackColor = false;
             this.button6.Click += new System.EventHandler(this.Button6_Click);
             // 
             // richTextBox8
             // 
-            this.richTextBox8.Location = new System.Drawing.Point(617, 71);
+            this.richTextBox8.Location = new System.Drawing.Point(448, 31);
             this.richTextBox8.Name = "richTextBox8";
             this.richTextBox8.Size = new System.Drawing.Size(72, 22);
             this.richTextBox8.TabIndex = 22;
@@ -328,7 +328,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(633, 57);
+            this.label3.Location = new System.Drawing.Point(464, 17);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(39, 13);
             this.label3.TabIndex = 23;
@@ -337,7 +337,7 @@
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(614, 97);
+            this.button8.Location = new System.Drawing.Point(445, 57);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(75, 23);
             this.button8.TabIndex = 24;

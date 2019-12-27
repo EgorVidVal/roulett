@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Rulet
 {
-    
+
     public partial class Form1 : Form
     {
         public Form1()
@@ -20,7 +20,7 @@ namespace Rulet
 
         //История банка в ходе игры
         List<int> bank_value = new List<int>() { };
-               
+
         //Хранение информации о ставке       
         List<object> instructions = new List<object>() { };
 
@@ -28,107 +28,56 @@ namespace Rulet
         //Запуск процесса
         private void Test_Click(object sender, EventArgs e)
         {
-           Table tab = new Table();
-           tab.Rand();
-           int roulett = tab.Roulett;
-           string color_numb = Convert.ToString(tab.Color_numb);
-          
-
-           Сonditions con = new Сonditions();           
-           //con.GameProgress(instructions ,roulett, color_numb, richTextBox7, bank_value, richTextBox2);
-
-
-           con.TestGameProgress(instructions, roulett, color_numb, Convert.ToInt32(richTextBox7.Text));
-            
-            richTextBox2.Text += "Число :" + roulett + " цвет: " + color_numb + "\n";
-            
-            if (con.rate_black_red[1] != 37)
-            {
-                richTextBox2.Text += "Выигрыш: " + con.rate_bank[1] + " числа: " + con.rate_black_red[1] + " \n";
-            }         
-            if (con.rate_black_red[2] == 1)
-            {
-                richTextBox2.Text += "Победа черный " + con.rate_bank[2] + " \n";
-            }            
-            if (con.rate_black_red[3] == 1)
-            {
-                richTextBox2.Text += "Победа красный " + con.rate_bank[3] + " \n";
-            }
-            if (con.rate_black_red[4] == 1)
-            {
-                richTextBox2.Text += "Победа линии " + con.rate_bank[4] + " \n";
-            }
-            if (con.rate_black_red[5] == 1)
-            {
-                richTextBox2.Text += "Победа трети " + con.rate_bank[5] + " \n";
-            }
-            if (con.rate_black_red[6] == 1)
-            {
-                richTextBox2.Text += "Победа чет,нечет " + con.rate_bank[6] + " \n";
-            }
-            if (con.rate_black_red[7] == 1)
-            {
-                richTextBox2.Text += "Победа ставки на половину поля " + con.rate_bank[7] + " \n";
-            }
-
-            int z = con.rate_bank[3] + con.rate_bank[2] + con.rate_bank[1] + con.rate_bank[4] + con.rate_bank[5] + con.rate_bank[6] + con.rate_bank[7];
-
-            richTextBox2.Text += "Общая сумма выиграша: " + z + " \n";
-            richTextBox7.Text = Convert.ToString(con.rate_black_red[0]);
+            GamePlay(instructions, output: richTextBox2, bank: richTextBox7);
             instructions = new List<object>() { };
-            
         }
-        
+
         List<object> AutoGame = new List<object>() { };
         int counterColor = 0;
 
         //Попытка автоматизации
         private void TestTest()
         {
-            
+
             List<int> game_numbers = new List<int>() { };
 
             List<string> game_color = new List<string>() { };
 
             Table tab = new Table();
 
-            
+
             int startColor = 0;
 
-            int counteInterval = Convert.ToInt32(richTextBox5.Text); 
+            int counteInterval = Convert.ToInt32(richTextBox5.Text);
 
             int interval;
             List<string> color = new List<string>() { };
             List<int> numbers = new List<int>() { };
 
-            for (int i = 0; i < AutoGame.Count;i++)
+            for (int i = 0; i < AutoGame.Count; i++)
             {
-                if(AutoGame[i] == "color")
+                if (AutoGame[i] == "color")
                 {
-                    Console.WriteLine(AutoGame[i +1]);
+                    Console.WriteLine(AutoGame[i + 1]);
                     startColor = 1;
                     color.Add(Convert.ToString(AutoGame[i + 1]));
                 }
-                if(AutoGame[i] == "numberofgames")
+                if (AutoGame[i] == "numberofgames")
                 {
                     numbers.Add(Convert.ToInt32(AutoGame[i + 1]));
                 }
 
             }
-            
-            for (int i = 0;i < GameNumber_of_Games();i++)
+
+            for (int i = 0; i < GameNumber_of_Games(); i++)
             {
                 tab.Rand();
                 int roulett = tab.Roulett;
                 string color_numb = tab.Color_numb;
 
-                
-
                 if (startColor > 0)
                 {
                     Console.WriteLine(counterColor);
-                   
-                  
 
                     // WMS_EEX
                     if (counterColor >= 5)
@@ -145,7 +94,7 @@ namespace Rulet
                         richTextBox7.Text = qwerty;
                     }
 
-                   
+
                     if (color_numb == color[0])
                     {
                         counterColor++;
@@ -157,106 +106,73 @@ namespace Rulet
                 }
 
             }
-            
+
         }
 
         private int GameNumber_of_Games()
         {
             return Convert.ToInt32(richTextBox6.Text);
         }
-        // добавляет в инструкцию ставку 1-12,13-24,25-36
-        private void But2k_12(int numb)
+
+        // Ход ход игры
+        //instruction Инструкция со ставками
+        //output вывов в тест
+        //bank обработка визуального банка
+        //bank_auto для авто режима, обработка банка без визуализации.
+        private void GamePlay(List<object> instruction, System.Windows.Forms.RichTextBox output = null, System.Windows.Forms.RichTextBox bank = null, int bank_auto = 0)
         {
-            instructions.Add("2k1_12");
+            Table tab = new Table();
+            tab.Rand();
+            int roulett = tab.Roulett;
+            string color_numb = Convert.ToString(tab.Color_numb);
 
-            instructions.Add(numb);
+            Сonditions con = new Сonditions();
 
-            richTextBox2.Text += instructions[instructions.Count - 1] + "\n";
+            con.TestGameProgress(instruction, roulett, color_numb, Convert.ToInt32(richTextBox7.Text));
 
-            instructions.Add(numericUpDown1.Value);
+            if (output != null) output.Text += "Число :" + roulett + " цвет: " + color_numb + "\n";
 
-            richTextBox2.Text += numericUpDown1.Value + "\n";
-
-            richTextBox7.Text = Convert.ToString(Convert.ToInt32(richTextBox7.Text) - Convert.ToInt32(numericUpDown1.Value));
-        }
-        // добавляет в инструкцию четное нечетное
-        private void Even_odd(int numb)
-        {
-            instructions.Add("EvenOdd");
-
-            instructions.Add(numb);
-
-            if (numb == 2)
+            if (con.rate_black_red[1] != 37)
             {
-                richTextBox2.Text += "Четная" + "\n";
+                if(output != null) output.Text += "Выигрыш: " + con.rate_bank[1] + " числа: " + con.rate_black_red[1] + " \n";
             }
+            if (con.rate_black_red[2] == 1)
+            {
+                if (output != null) output.Text += "Победа черный " + con.rate_bank[2] + " \n";
+            }
+            if (con.rate_black_red[3] == 1)
+            {
+                if (output != null) output.Text += "Победа красный " + con.rate_bank[3] + " \n";
+            }
+            if (con.rate_black_red[4] == 1)
+            {
+                if (output != null) output.Text += "Победа линии " + con.rate_bank[4] + " \n";
+            }
+            if (con.rate_black_red[5] == 1)
+            {
+                if (output != null) output.Text += "Победа трети " + con.rate_bank[5] + " \n";
+            }
+            if (con.rate_black_red[6] == 1)
+            {
+                if (output != null) output.Text += "Победа чет,нечет " + con.rate_bank[6] + " \n";
+            }
+            if (con.rate_black_red[7] == 1)
+            {
+                if (output != null) output.Text += "Победа ставки на половину поля " + con.rate_bank[7] + " \n";
+            }
+
+            int z = con.rate_bank[3] + con.rate_bank[2] + con.rate_bank[1] + con.rate_bank[4] + con.rate_bank[5] + con.rate_bank[6] + con.rate_bank[7];
+
+            //Для автоматического режима будет обновлять скрытый банк без визуализации.
+            if (output != null) output.Text += "Общая сумма выиграша: " + z + " \n";
+
+            if (bank != null) bank.Text = Convert.ToString(con.rate_black_red[0]);
             else
             {
-                richTextBox2.Text += "Нечетная" + "\n";
+                bank_auto = con.rate_black_red[0];
             }
-
-            instructions.Add(numericUpDown1.Value);
-
-            richTextBox2.Text += numericUpDown1.Value + "\n";
-
-            richTextBox7.Text = Convert.ToString(Convert.ToInt32(richTextBox7.Text) - Convert.ToInt32(numericUpDown1.Value));
-
+            
         }
-        // добавляет в инструкцию от 1- 18, 19 - 36;
-        private void Halves(int numb)
-        {
-            instructions.Add("Halves");
-
-            instructions.Add(numb);
-
-            if (numb == 2)
-            {
-                richTextBox2.Text += "От одного до 18" + "\n";
-            }
-            else
-            {
-                richTextBox2.Text += "От 19 одного до 36" + "\n";
-            }
-
-            instructions.Add(numericUpDown1.Value);
-
-            richTextBox2.Text += numericUpDown1.Value + "\n";
-
-            richTextBox7.Text = Convert.ToString(Convert.ToInt32(richTextBox7.Text) - Convert.ToInt32(numericUpDown1.Value));
-        }
-        // добавляет в инструкцию 2к1 1 4 7 10
-        public void Buttom2_1(int numb)
-        {
-            instructions.Add("2k1");
-
-            instructions.Add(numb);
-
-            richTextBox2.Text += instructions[instructions.Count - 1] + "\n";
-
-            instructions.Add(numericUpDown1.Value);
-
-            richTextBox2.Text += numericUpDown1.Value + "\n";
-
-            richTextBox7.Text = Convert.ToString(Convert.ToInt32(richTextBox7.Text) - Convert.ToInt32(numericUpDown1.Value));
-        }
-        // добавляет в инструкцию ставку на число
-        private void rate_number(int numb)
-        {
-            instructions.Add("Rate");
-
-            instructions.Add(numb);
-
-            richTextBox2.Text += instructions[instructions.Count - 1] + "\n";
-
-            instructions.Add(numericUpDown1.Value);
-
-            richTextBox2.Text += numericUpDown1.Value + "\n";
-
-            richTextBox7.Text = Convert.ToString(Convert.ToInt32(richTextBox7.Text) - Convert.ToInt32(numericUpDown1.Value));
-        }
-
-        System.Windows.Forms.RichTextBox TextBox = new System.Windows.Forms.RichTextBox();
-        System.Windows.Forms.NumericUpDown Number = new System.Windows.Forms.NumericUpDown();
 
         //красный или черный ставка 
         //instruktion- текст инструкции для опознавания
@@ -280,8 +196,8 @@ namespace Rulet
             instructions.Add(numb);
 
             if (ounput_text != null && evenodd == false && oneand == false) ounput_text.Text += instructions[instructions.Count - output] + "\n";
-            
 
+            
             //на что ставка
             if (rate_box != null) instructions.Add(rate_box.Value);
             else instructions.Add(bank);
@@ -317,28 +233,11 @@ namespace Rulet
            
         }
 
-        private int Game_Instructions(string color_numb, string color, int interval)
-        {
-            if (counterColor == interval)
-            {
-                return 1;
-            }
 
-            if (color_numb == color)
-            {
-                counterColor++;
-            }
-            else
-            {
-                counterColor = 0;
-            }
-
-            return 0;
-        }
         //black, ставка
         private void Button7_Click(object sender, EventArgs e)
         {
-            Filling_out_instructions("Black",0, output : 2, bank_output : richTextBox7, ounput_text : richTextBox2,rate_box: numericUpDown1);
+            Filling_out_instructions("Black", 0, output : 2, bank_output : richTextBox7, ounput_text : richTextBox2,rate_box: numericUpDown1);
         }
         //red, ставка
         private void Button6_Click(object sender, EventArgs e)
@@ -475,10 +374,14 @@ namespace Rulet
 
         private void RichTextBox2_TextChanged(object sender, EventArgs e)
         {
+            //Прокручивает вниз
+            richTextBox2.SelectionStart = richTextBox2.TextLength;
+            richTextBox2.ScrollToCaret();
 
         }
 
-        private void Button2_Click(object sender, EventArgs e)
+
+private void Button2_Click(object sender, EventArgs e)
         {
             button2.ImageAlign = ContentAlignment.MiddleRight;
             button2.FlatStyle = FlatStyle.Popup;

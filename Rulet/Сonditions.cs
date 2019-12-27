@@ -44,7 +44,7 @@ namespace Rulet
                         //если совпадает, то ставка увеличивается на 2 и плюсуется к банку
                         bank += (Convert.ToInt32(instructions[i + 2]) * 2);
                         rate_black_red[2] = 1;
-                        rate_bank[2] = (Convert.ToInt32(instructions[i + 1]) * 2);
+                        rate_bank[2] = (Convert.ToInt32(instructions[i + 2]) * 2);
                         //если был добавлен необязательный аргумент то выводит в окно. 
 
                     }                   
@@ -55,9 +55,9 @@ namespace Rulet
                 {
                     if (instructions[i] == color_numb)
                     {
+                        bank += (Convert.ToInt32(instructions[i + 2]) * 2);
                         rate_black_red[3] = 1;
                         rate_bank[3] = (Convert.ToInt32(instructions[i + 2]) * 2);
-                        bank += (Convert.ToInt32(instructions[i + 1]) * 2);                        
 
                     }
                 }
